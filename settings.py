@@ -1,6 +1,13 @@
 fesmu_root_url = 'http://www.fesmu.ru/eport/eport/'
 
-scam_data = {
+
+def merge(x, y):
+    z = x.copy()  # start with x's keys and values
+    z.update(y)  # modifies z with y's keys and values & returns None
+    return z
+
+
+scam_data_1 = {
     'ctl00$MainContent$UserText':
     '',
     'ctl00$MainContent$PassText':
@@ -27,7 +34,76 @@ scam_data = {
     '1_42,1_75,2_27'
 }
 
-def merge(x, y):
-    z = x.copy()   # start with x's keys and values
-    z.update(y)    # modifies z with y's keys and values & returns None
-    return z
+scam_data_2 = {
+    'ctl00_MainContent_ToolkitScriptManager1_HiddenField':
+    '',
+    '__EVENTTARGET':
+    '',
+    '__EVENTARGUMENT':
+    '',
+    '__VIEWSTATE':
+    '/wEPDwULLTE3NjQ0Njk1MzYPZBYCZg9kFgICAw9kFgJmD2QWAgIJD2QWBAIDD2QWAmYPZBYCZg9kFgJmD2QWAgIBDxQrAAUPFgIeD0RhdGFTb3VyY2VCb3VuZGdkZGQ8KwAHAQYPZBAWAgIBAgIWAhQrAAEWAh4PQ29sVmlzaWJsZUluZGV4ZhQrAAEWAh8BAgFkFgBkAgcPZBYCZg9kFgJmD2QWAmYPZBYCAgEPFCsABWRkZDwrAAcBBg9kEBYCZgIBFgIUKwABFgIfAWYUKwABFgIfAQIBZBYAZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAwUdY3RsMDAkTWFpbkNvbnRlbnQkQVNQeEJ1dHRvbjcFHWN0bDAwJE1haW5Db250ZW50JEFTUHhCdXR0b24xBR1jdGwwMCRNYWluQ29udGVudCRBU1B4QnV0dG9uOL71BMGK5LGuFoieB2pc2OORpg/477guTu+aq9j1FDB7',
+    '__VIEWSTATEGENERATOR':
+    '847F47AD',
+    'ctl00$MainContent$hfTest':
+    '-1',
+    'ctl00_MainContent_ASPxCallbackPanel1_ASPxListBox2DeletedItems':
+    '',
+    'ctl00_MainContent_ASPxCallbackPanel1_ASPxListBox2InsertedItems':
+    '',
+    'ctl00_MainContent_ASPxCallbackPanel1_ASPxListBox2CustomCallback':
+    '',
+    'ctl00$MainContent$ASPxCallbackPanel1$ASPxListBox2':
+    'System.Data.DataRowView',
+    'ctl00_MainContent_ASPxCallbackPanel2_ASPxListBox3DeletedItems':
+    '',
+    'ctl00_MainContent_ASPxCallbackPanel2_ASPxListBox3InsertedItems':
+    '',
+    'ctl00_MainContent_ASPxCallbackPanel2_ASPxListBox3CustomCallback':
+    '',
+    'ctl00$MainContent$ASPxCallbackPanel2$ASPxListBox3':
+    '',
+    'DXScript':
+    '1_42,1_75,2_27,2_34,2_40,1_41,2_36',
+    '__CALLBACKID':
+    'ctl00$MainContent$ASPxCallbackPanel2',
+    '__CALLBACKPARAM':
+    'c0:',
+    '__EVENTVALIDATION':
+    '/wEdAAdJe/IodYZPo1MYmga2VNNOI7ZJDWlRgaefdPW8BTEVtXw+ikVKJJfrT0ndBbXKBTA39nUTQDb0GEkh6LDT5SpRsAIaIhbklmBqr8w+PxD292wBCiQy8HT9gxcspUtWdqpbDCDdUSb6jcSCho5zpwlS5fp1BGkKOATquDwoQUIst0axsj2qJ2rkYBJm8oFR9hc=',
+}
+
+scam_data_3 = {
+    'ctl00_MainContent_ToolkitScriptManager1_HiddenField':
+    '',
+    '__EVENTTARGET':
+    '',
+    '__EVENTARGUMENT':
+    '',
+    '__VIEWSTATE':
+    '/wEPDwULLTE3NjQ0Njk1MzYPZBYCZg9kFgICAw9kFgJmD2QWAgIJD2QWBAIDD2QWAmYPZBYCZg9kFgJmD2QWAgIBDxQrAAUPFgIeD0RhdGFTb3VyY2VCb3VuZGdkZGQ8KwAHAQYPZBAWAgIBAgIWAhQrAAEWAh4PQ29sVmlzaWJsZUluZGV4ZhQrAAEWAh8BAgFkFgBkAgcPZBYCZg9kFgJmD2QWAmYPZBYCAgEPFCsABWRkZDwrAAcBBg9kEBYCZgIBFgIUKwABFgIfAWYUKwABFgIfAQIBZBYAZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAwUdY3RsMDAkTWFpbkNvbnRlbnQkQVNQeEJ1dHRvbjcFHWN0bDAwJE1haW5Db250ZW50JEFTUHhCdXR0b24xBR1jdGwwMCRNYWluQ29udGVudCRBU1B4QnV0dG9uOL71BMGK5LGuFoieB2pc2OORpg/477guTu+aq9j1FDB7',
+    '__VIEWSTATEGENERATOR':
+    '847F47AD',
+    '__EVENTVALIDATION':
+    '/wEdAAdJe/IodYZPo1MYmga2VNNOI7ZJDWlRgaefdPW8BTEVtXw+ikVKJJfrT0ndBbXKBTA39nUTQDb0GEkh6LDT5SpRsAIaIhbklmBqr8w+PxD292wBCiQy8HT9gxcspUtWdqpbDCDdUSb6jcSCho5zpwlS5fp1BGkKOATquDwoQUIst0axsj2qJ2rkYBJm8oFR9hc=',
+    'ctl00_MainContent_ASPxCallbackPanel1_ASPxListBox2DeletedItems':
+    '',
+    'ctl00_MainContent_ASPxCallbackPanel1_ASPxListBox2InsertedItems':
+    '',
+    'ctl00_MainContent_ASPxCallbackPanel1_ASPxListBox2CustomCallback':
+    '',
+    'ctl00$MainContent$ASPxCallbackPanel1$ASPxListBox2':
+    'System.Data.DataRowView',
+    'ctl00_MainContent_ASPxCallbackPanel2_ASPxListBox3DeletedItems':
+    '',
+    'ctl00_MainContent_ASPxCallbackPanel2_ASPxListBox3InsertedItems':
+    '',
+    'ctl00_MainContent_ASPxCallbackPanel2_ASPxListBox3CustomCallback':
+    '',
+    'ctl00$MainContent$ASPxCallbackPanel2$ASPxListBox3':
+    'System.Data.DataRowView',
+    'ctl00$MainContent$ASPxButton1':
+    '',
+    'DXScript':
+    '1_42,1_75,2_27,2_34,2_40,1_41,2_36',
+}
