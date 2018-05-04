@@ -1,5 +1,5 @@
 # configs
-assets/config.json
+creds.ini
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
