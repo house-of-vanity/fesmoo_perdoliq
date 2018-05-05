@@ -203,8 +203,11 @@ class Main:
         logging.info("Send correct answer for %s. It's %s" % (q_number,
                                                               answers))
 
-    def resolve(self, subj, test):
+    def resolve(self, subj, test, accuracy):
         q_count = self.start_test(subj, test)
+        # applying accuracy here
+        # spoil_count = q_count - q_count * (accuracy / 100)
+        q_count = int(q_count * (int(accuracy) / 100))
         for i in range(1, q_count + 1):
             prediction = self.predict(i)
             self.answer(i, prediction)

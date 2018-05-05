@@ -30,11 +30,7 @@ List it with `list` command
 example:
 resolve 4 1''')
             return 1
-#        print("Resolving %s, %s" % (
-#            app.subjects[q[1]],
-#            app.subjects[q[1]][q[2]])
-#        )
-        app.resolve(int(q[1]), int(q[2]))
+        app.resolve(int(q[1]), int(q[2]), accuracy)
 
 def list_all():
     i = 0
