@@ -3,6 +3,8 @@ import settings
 import logging
 import re
 from bs4 import BeautifulSoup
+from random import randint
+import time
 
 logging.basicConfig(level=logging.INFO)
 
@@ -133,7 +135,7 @@ class Main:
             headers={'User-Agent': 'Mozilla/1337'})
         answers = parse(r.text)
         if len(answers) == 0:
-            logging.warning(
+            logging.debug(
                 "There isn't any correct answers for %s. Looks like"\
                 " something went wrong. Trying other way...", q_number
             )
@@ -162,7 +164,7 @@ class Main:
     def answer(self, q_number, answers):
         def gen_a(a_count, answers):
             a = {}
-            for i in range(1, a_count+1):
+            for i in range(1, a_count + 1):
                 if i in answers:
                     a['ctl00$MainContent$ASPxCheckBox' + str(i)] = 'C'
                     a['ctl00$MainContent$hfo' + str(i)] = '1'
@@ -203,11 +205,53 @@ class Main:
         logging.info("Send correct answer for %s. It's %s" % (q_number,
                                                               answers))
 
+    def finish_test(self):
+        requests.post(
+            settings.fesmu_root_url + 'studtst2.aspx',
+            data=settings.scam_data_9,
+            cookies={'ASP.NET_SessionId': self.SessionId})
+        requests.post(
+            settings.fesmu_root_url + 'studtst4.aspx',
+            data=settings.scam_data_10,
+            cookies={'ASP.NET_SessionId': self.SessionId})
+
     def resolve(self, subj, test, accuracy):
+        accuracy = int(accuracy)
+        # chance to override accuracy
+        accuracy_new = input('Accuracy level [%s]: ' % accuracy)
+        if accuracy_new != '':
+            try:
+                accuracy = int(accuracy_new)
+            except:
+                pass
+        is_delayd = input('Wait random time per question and auto commit? [y/N]: ')
+        if is_delayd == 'y' or is_delayd == 'Y':
+            is_delayd = True
+        else:
+            is_delayd = False
+
         q_count = self.start_test(subj, test)
-        # applying accuracy here
-        # spoil_count = q_count - q_count * (accuracy / 100)
-        q_count = int(q_count * (int(accuracy) / 100))
+
+        def sleep_rand():
+            delay = randint(20, 40)
+            logging.info("Going to wait %s sec for this question." % delay)
+            time.sleep(delay)
+        # applying accuracy here. trying to make resulting
+        # accuracy no less than requested.
+        spoil_count = int(q_count - q_count * (accuracy / 100))
+        if int(spoil_count / q_count * (-100) + 100) < accuracy:
+            spoil_count -= 1
+
+        # skip random `spoil_count` questions.
+        skip_this = []
+        for i in range(0, spoil_count):
+            skip_this.append(randint(1, q_count + 1))
         for i in range(1, q_count + 1):
-            prediction = self.predict(i)
-            self.answer(i, prediction)
+            if is_delayd == True:
+                sleep_rand()
+            if i not in skip_this:
+                prediction = self.predict(i)
+                self.answer(i, prediction)
+        if is_delayd == True:
+            self.finish_test()
+

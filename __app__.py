@@ -7,9 +7,7 @@ config = configparser.ConfigParser()
 
 def input_line():
     allah = [
-        '༼ つ ͠° ͟ ͟ʖ ͡° ༽つ', '(☄ฺ◣д◢)☄ฺ', '( >д<)', '(ꐦ ಠ皿ಠ )', '（;≧皿≦）',
-        '((╬●∀●)', '(；￣Д￣）', '(;¬_¬)', '(ꐦ°᷄д°᷅)', '(*｀益´*)', '（；¬＿¬)',
-        '(ﾒﾟ皿ﾟ)', '( ╬◣ 益◢)', '(ఠ్ఠ ˓̭ ఠ్ఠ)'
+        '>>>'
     ]
     return allah[random.randint(0, len(allah)-1)]
 
@@ -77,6 +75,6 @@ Type h or help for help.
 ''')
 
 while True:
-    q = input('%s >>> ' % input_line())
+    q = input('Command %s ' % input_line())
 
     act(q)
