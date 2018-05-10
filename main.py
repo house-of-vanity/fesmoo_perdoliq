@@ -216,6 +216,7 @@ class Main:
             cookies={'ASP.NET_SessionId': self.SessionId})
 
     def resolve(self, subj, test, accuracy):
+        self.auth()
         accuracy = int(accuracy)
         # chance to override accuracy
         accuracy_new = input('Accuracy level [%s]: ' % accuracy)
