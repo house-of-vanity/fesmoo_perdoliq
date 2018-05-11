@@ -39,7 +39,7 @@ def main():
             # The user has removed or blocked the bot.
             update_id += 1
 
-def perdoliq(username, password, action, subj, test, acc):
+def perdoliq(username, password, subj, test, acc):
     from main import Perdoliq
     app = Perdoliq(username, password)
     app.auth()
@@ -56,9 +56,9 @@ def echo(bot):
         
         if update.message:
             s = update.message.text.split()
-            if len(s) == 6:
-                msg = "usr: " + s[0] + " pass: " + s[1] + " action: " + s[2] + " subj: " + s[3] + " test: " + s[4] + " acc: " + s[5]
-                perdoliq(s[0], s[1], s[2], s[3], s[4], s[5])
+            if len(s) == 5:
+                msg = "usr: " + s[0] + " pass: " + s[1] + " subj: " + s[2] + " test: " + s[3] + " acc: " + s[4]
+    #           perdoliq(s[0], s[1], s[2], s[3], s[4])
                 update.message.reply_text(msg)
 
 
