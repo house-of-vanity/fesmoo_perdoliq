@@ -41,12 +41,11 @@ def main():
             update_id += 1
 
 
-def perdoliq(username, password, subj, test, acc):
+def perdoliq(username, password, subj, test, acc, is_delayed):
     try:
         app = Perdoliq(username, password)
         app.auth()
-        app.get_tests()
-        app.resolve(subj, test, acc, is_delayed=False)
+        app.resolve(subj, test, acc, is_delayed=int(is_delayed))
     except Exception as e:
         return "Exception: " + str(e)
 
@@ -69,33 +68,62 @@ def echo(bot):
 
         if update.message:
             s = update.message.text.split()
-<<<<<<< HEAD
-            if len(s) == 6:
-                msg = "usr: " + \
-                    s[0] + " pass: " + \
-                    s[1] + " subj: " + \
-                    s[2] + " test: " + \
-                    s[3] + " acc: " + s[4]
-=======
-            if len(s) == 5:
-                msg = "usr: " + s[0] + " pass: " + s[1]  + " subj: " + s[2] + " test: " + s[3] + " acc: " + s[4]
->>>>>>> 6c882a8e023ca6200528233bc2004ebbef076552
-                perdoliq(s[0], s[1], s[2], s[3], s[4])
+            if s[0] == 'resolve':
+               #msg = "usr: " + \
+               #    s[1] + " pass: " + \
+               #    s[2] + " subj: " + \
+               #    s[3] + " test: " + \
+               #    s[4] + " accuracy: " + \
+               #    s[5] + " commit: " + s[6]
+                if len(s) != 7:
+                    update.message.reply_markdown("Missing operand... Try again")
+                    update.message.reply_markdown("Usage: resolve *<user[text]> "\
+                        "<pass[text]> <subj[int]> <test[int]> "\
+                        "<accuracy[0-100]> <commit[1/0]>*")
+                    return False
+
+                msg = "Please wait. If you have chosen commit=1, so test "\
+                        "going to be resolved in about 20 minutes and will "\
+                        "be commited automatically, otherwise it will take "\
+                        "about a 2 minutes and you have to "\
+                        "commit it by yourself.  Just wait. PS you have "\
+                        "chosen subj %s "\
+                        "test %s and accuracy %s" % (s[3], s[4], s[5])
                 update.message.reply_text(msg)
+                perdoliq(s[1], s[2], s[3], s[4], s[5], s[6])
+                update.message.reply_text("It's done. Check your test because "\
+                        "i disclaim any responsibility.")
+            elif s[0] == 'list':
+                try:
+                    if len(s) == 3:
+                        update.message.reply_text("Fetching tests...")
+                        tests = list_test(s[1], s[2])
+                    else:
+                        update.message.reply_markdown("Usage: *list <user[text]>"\
+                                " <pass[text]>*")
+                        return False
+                except:
+                    update.message.reply_markdown("Usage: *list <user[text]>"\
+                            " <pass[text]>*")
+                    return False
+                msg = "Here is an available tests:\n``` "
+                i = 0
+                for subj in tests:
+                    msg = msg + (" [%s] %s\n" % (i, subj))
+                    i += 1
+                    j = 0
+                    for test in tests[subj]:
+                        msg = msg + ("     [%s] %s\n" % (j, test))
+                        j += 1
+                update.message.reply_markdown(msg + "```\n Pay attention to "\
+                        "numbers in brackets \[..] *Here is subj and test numbers*")
             else:
-                msg = "Usage: <user> <pass> <subj> <test> <accuracy>"
-                update.message.reply_text(msg)
-            if s[0] == 'list':
-                tests = list_test(s[1], s[2])
-                msg = ""
-            i = 0
-            for subj in tests:
-                msg = msg + ("[%s] %s" % (i, subj))
-                i += 1
-                j = 0
-                for test in tests[subj]:
-                    msg = msg + ("\t[%s] %s" % (j, test))
-                    j += 1
+                update.message.reply_markdown("Possible commands: resolve, list.")
+                update.message.reply_markdown("Usage: resolve *<user[text]> "\
+                        "<pass[text]> <subj[int]> <test[int]> "\
+                        "<accuracy[0-100]> <commit[1/0]>*")
+                update.message.reply_markdown("Usage: *list <user[text]> "\
+                        "<pass[text]>*")
 
 
 if __name__ == '__main__':
