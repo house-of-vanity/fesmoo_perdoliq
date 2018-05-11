@@ -28,8 +28,7 @@ def main():
     except IndexError:
         update_id = None
 
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
+    logging.basicConfig(level=logging.DEBUG)
     while True:
         try:
             echo(bot)
@@ -40,11 +39,15 @@ def main():
             update_id += 1
 
 def perdoliq(username, password, subj, test, acc):
-    from main import Perdoliq
-    app = Perdoliq(username, password)
-    app.auth()
-    app.get_tests()
-    app.resolve(subj, test, acc, is_delayed=False)
+    try:
+        from main import Perdoliq
+        app = Perdoliq(username, password)
+        app.auth()
+        app.get_tests()
+        app.resolve(subj, test, acc, is_delayed=False)
+    except Exception as e:
+        return "Exception: " + str(e) 
+
     
 
 def echo(bot):
@@ -56,9 +59,9 @@ def echo(bot):
         
         if update.message:
             s = update.message.text.split()
-            if len(s) == 5:
-                msg = "usr: " + s[0] + " pass: " + s[1] + " subj: " + s[2] + " test: " + s[3] + " acc: " + s[4]
-    #           perdoliq(s[0], s[1], s[2], s[3], s[4])
+            if len(s) == 6:
+                msg = "usr: " + s[0] + " pass: " + s[1]  + " subj: " + s[2] + " test: " + s[3] + " acc: " + s[4]
+                perdoliq(s[0], s[1], s[2], s[3], s[4])
                 update.message.reply_text(msg)
 
 

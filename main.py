@@ -232,12 +232,12 @@ class Perdoliq:
             logging.info("Going to wait %s sec for this question." % delay)
             time.sleep(delay)
 
+        accuracy = int(accuracy)
         # applying accuracy here. trying to make resulting
         # accuracy NO LESSthan requested.
         spoil_count = int(q_count - q_count * (accuracy / 100))
         if int(spoil_count / q_count * (-100) + 100) < accuracy:
             spoil_count -= 1
-
         # skip random `spoil_count` questions.
         # Choose questions which going to be skipped
         skip_this = []
