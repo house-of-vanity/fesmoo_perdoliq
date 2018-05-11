@@ -1,4 +1,4 @@
-from main import Main
+from main import Perdoliq
 import configparser
 import random
 
@@ -79,7 +79,7 @@ except:
     with open('creds.ini', 'w') as configfile:
         config.write(configfile)
 
-app = Main(username, password)
+app = Perdoliq(username, password)
 
 # make auth
 app.auth()

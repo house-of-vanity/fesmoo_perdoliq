@@ -9,7 +9,7 @@ import time
 logging.basicConfig(level=logging.INFO)
 
 
-class Main:
+class Perdoliq:
     def __init__(self, username, password):
         self.password = password
         self.username = username
