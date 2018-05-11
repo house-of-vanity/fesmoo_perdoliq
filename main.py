@@ -17,6 +17,7 @@ class Main:
         self.name = ''
         self.subjects = {}
 
+    # make auth
     def auth(self):
         r = requests.get(settings.fesmu_root_url)
         for c in r.cookies:
@@ -43,6 +44,9 @@ class Main:
             '', soup.find(id="ctl00_MainContent_Label1").get_text())[14:]
         logging.info('Current user is %s', self.name)
 
+        return self.SessionId
+
+    # update and return list of subjs and tests
     def get_tests(self):
         r = requests.get(
             settings.fesmu_root_url + 'studtst1.aspx',
@@ -70,7 +74,7 @@ class Main:
                                                           test.get_text()))
             i += 1
 
-        #print(self.subjects)
+        return self.subjects
 
     def start_test(self, pred, test):
         # start test
@@ -161,6 +165,7 @@ class Main:
                      (q_number, answers))
         return answers
 
+    # mark answers into requested question
     def answer(self, q_number, answers):
         def gen_a(a_count, answers):
             a = {}
@@ -205,6 +210,7 @@ class Main:
         logging.info("Send correct answer for %s. It's %s" % (q_number,
                                                               answers))
 
+    # commit test
     def finish_test(self):
         requests.post(
             settings.fesmu_root_url + 'studtst2.aspx',
@@ -215,44 +221,37 @@ class Main:
             data=settings.scam_data_10,
             cookies={'ASP.NET_SessionId': self.SessionId})
 
-    def resolve(self, subj, test, accuracy):
+    def resolve(self, subj, test, accuracy, is_delayed=False):
+        # renew auth
         self.auth()
-        accuracy = int(accuracy)
-        # chance to override accuracy
-        accuracy_new = input('Accuracy level [%s]: ' % accuracy)
-        if accuracy_new != '':
-            try:
-                accuracy = int(accuracy_new)
-            except:
-                pass
-        is_delayd = input('Wait random time per question and auto commit? [y/N]: ')
-        if is_delayd == 'y' or is_delayd == 'Y':
-            is_delayd = True
-        else:
-            is_delayd = False
-
+        # get count of questions
         q_count = self.start_test(subj, test)
 
         def sleep_rand():
             delay = randint(20, 40)
             logging.info("Going to wait %s sec for this question." % delay)
             time.sleep(delay)
+
         # applying accuracy here. trying to make resulting
-        # accuracy no less than requested.
+        # accuracy NO LESSthan requested.
         spoil_count = int(q_count - q_count * (accuracy / 100))
         if int(spoil_count / q_count * (-100) + 100) < accuracy:
             spoil_count -= 1
 
         # skip random `spoil_count` questions.
+        # Choose questions which going to be skipped
         skip_this = []
         for i in range(0, spoil_count):
             skip_this.append(randint(1, q_count + 1))
+
+        # start resolve test
         for i in range(1, q_count + 1):
-            if is_delayd == True:
+            if is_delayed == True:
                 sleep_rand()
             if i not in skip_this:
                 prediction = self.predict(i)
                 self.answer(i, prediction)
-        if is_delayd == True:
-            self.finish_test()
 
+        # make autocommit
+        if is_delayed == True:
+            self.finish_test()
