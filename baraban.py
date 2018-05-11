@@ -93,6 +93,7 @@ def echo(bot):
                         "chosen subj %s "\
                         "test %s and accuracy %s" % (s[3], s[4], s[5])
                 update.message.reply_text(msg)
+                update.message.reply_photo(open('1516736368795.png', 'rb'))
                 perdoliq(s[1], s[2], s[3], s[4], s[5], s[6])
                 update.message.reply_text("It's done. Check your test because "\
                         "i disclaim any responsibility.")
