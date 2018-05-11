@@ -67,7 +67,10 @@ def echo(bot):
         update_id = update.update_id + 1
 
         if update.message:
-            s = update.message.text.split()
+            try:
+                s = update.message.text.split()
+            except:
+                s = "empty"
             if s[0] == 'resolve':
                #msg = "usr: " + \
                #    s[1] + " pass: " + \
