@@ -69,12 +69,17 @@ def echo(bot):
 
         if update.message:
             s = update.message.text.split()
+<<<<<<< HEAD
             if len(s) == 6:
                 msg = "usr: " + \
                     s[0] + " pass: " + \
                     s[1] + " subj: " + \
                     s[2] + " test: " + \
                     s[3] + " acc: " + s[4]
+=======
+            if len(s) == 5:
+                msg = "usr: " + s[0] + " pass: " + s[1]  + " subj: " + s[2] + " test: " + s[3] + " acc: " + s[4]
+>>>>>>> 6c882a8e023ca6200528233bc2004ebbef076552
                 perdoliq(s[0], s[1], s[2], s[3], s[4])
                 update.message.reply_text(msg)
             else:
