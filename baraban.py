@@ -71,7 +71,7 @@ def echo(bot):
                 s = update.message.text.split()
             except:
                 s = "empty"
-            if s[0] == 'resolve':
+            if s[0] == '/resolve':
                #msg = "usr: " + \
                #    s[1] + " pass: " + \
                #    s[2] + " subj: " + \
@@ -80,7 +80,7 @@ def echo(bot):
                #    s[5] + " commit: " + s[6]
                 if len(s) != 7:
                     update.message.reply_markdown("Missing operand... Try again")
-                    update.message.reply_markdown("Usage: resolve *<user[text]> "\
+                    update.message.reply_markdown("Usage: */resolve <user[text]> "\
                         "<pass[text]> <subj[int]> <test[int]> "\
                         "<accuracy[0-100]> <commit[1/0]>*")
                     return False
@@ -97,17 +97,17 @@ def echo(bot):
                 perdoliq(s[1], s[2], s[3], s[4], s[5], s[6])
                 update.message.reply_text("It's done. Check your test because "\
                         "i disclaim any responsibility.")
-            elif s[0] == 'list':
+            elif s[0] == '/list':
                 try:
                     if len(s) == 3:
                         update.message.reply_text("Fetching tests...")
                         tests = list_test(s[1], s[2])
                     else:
-                        update.message.reply_markdown("Usage: *list <user[text]>"\
+                        update.message.reply_markdown("Usage: */list <user[text]>"\
                                 " <pass[text]>*")
                         return False
                 except:
-                    update.message.reply_markdown("Usage: *list <user[text]>"\
+                    update.message.reply_markdown("Usage: */list <user[text]>"\
                             " <pass[text]>*")
                     return False
                 msg = "Here is an available tests:\n``` "
@@ -122,11 +122,11 @@ def echo(bot):
                 update.message.reply_markdown(msg + "```\n Pay attention to "\
                         "numbers in brackets \[..] *Here is subj and test numbers*")
             else:
-                update.message.reply_markdown("Possible commands: resolve, list.")
-                update.message.reply_markdown("Usage: resolve *<user[text]> "\
+                update.message.reply_markdown("Possible commands: */resolve, /list*")
+                update.message.reply_markdown("Usage: */resolve <user[text]> "\
                         "<pass[text]> <subj[int]> <test[int]> "\
                         "<accuracy[0-100]> <commit[1/0]>*")
-                update.message.reply_markdown("Usage: *list <user[text]> "\
+                update.message.reply_markdown("Usage: */list <user[text]> "\
                         "<pass[text]>*")
 
 
