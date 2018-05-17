@@ -1,5 +1,6 @@
 # configs
 creds.ini
+tg_settings.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

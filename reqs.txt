@@ -1,5 +1,7 @@
-python3
+# python3 only
+pip install requests
 
-py -m pip install requests
+pip install beautifulsoup4
 
-py -m pip install beautifulsoup4
+pip install python-telegram-bot
+

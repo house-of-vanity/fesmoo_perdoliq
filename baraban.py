@@ -10,7 +10,7 @@ import logging
 import telegram
 from telegram.error import NetworkError, Unauthorized
 from time import sleep
-from main import Perdoliq
+import tg_settings
 
 update_id = None
 
@@ -19,7 +19,12 @@ def main():
     """Run the bot."""
     global update_id
     # Telegram Bot Authorization Token
-    TOKEN = os.environ["TG_TOKEN"]
+    TOKEN = tg_settings.TG_TOKEN
+    try:
+        if os.environ["DRYRUN"]:
+            from dryrun import Perdoliq
+    except:
+        from main import Perdoliq
     bot = telegram.Bot(TOKEN)
 
     # get the first pending update_id,
@@ -112,6 +117,7 @@ def echo(bot):
                     return False
                 msg = "Here is an available tests:\n``` "
                 i = 0
+                print(tests)
                 for subj in tests:
                     msg = msg + (" [%s] %s\n" % (i, subj))
                     i += 1
