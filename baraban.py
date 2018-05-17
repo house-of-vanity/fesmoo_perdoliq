@@ -11,6 +11,11 @@ import telegram
 from telegram.error import NetworkError, Unauthorized
 from time import sleep
 import tg_settings
+try:
+    if os.environ["DRYRUN"]:
+        from dryrun import Perdoliq
+except:
+    from main import Perdoliq
 
 update_id = None
 
@@ -20,11 +25,6 @@ def main():
     global update_id
     # Telegram Bot Authorization Token
     TOKEN = tg_settings.TG_TOKEN
-    try:
-        if os.environ["DRYRUN"]:
-            from dryrun import Perdoliq
-    except:
-        from main import Perdoliq
     bot = telegram.Bot(TOKEN)
 
     # get the first pending update_id,

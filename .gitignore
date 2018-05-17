@@ -1,6 +1,8 @@
 # configs
 creds.ini
 tg_settings.py
+*.swp
+*.swo
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
