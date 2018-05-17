@@ -117,7 +117,6 @@ def echo(bot):
                     return False
                 msg = "Here is an available tests:\n``` "
                 i = 0
-                print(tests)
                 for subj in tests:
                     msg = msg + (" [%s] %s\n" % (i, subj))
                     i += 1
