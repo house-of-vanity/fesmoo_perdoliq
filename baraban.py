@@ -112,6 +112,7 @@ def do_action(update):
                 update.message.reply_text("Fetching tests...")
                 sleep(5)
                 tests = list_test(s[1], s[2])
+                #print("******",tests)
             else:
                 update.message.reply_markdown("Usage: */list <user[text]>"\
                         " <pass[text]>*")
@@ -122,6 +123,7 @@ def do_action(update):
             return False
         msg = "Here is an available tests:\n``` "
         i = 0
+        #print("******",tests)
         for subj in tests:
             msg = msg + (" [%s] %s\n" % (i, subj))
             i += 1

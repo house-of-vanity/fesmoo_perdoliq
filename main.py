@@ -39,6 +39,7 @@ class Perdoliq:
             settings.fesmu_root_url + 'startstu.aspx',
             cookies={'ASP.NET_SessionId': self.SessionId})
         soup = BeautifulSoup(r.text, "html.parser")
+        #print("****** ", soup)
         _p = re.compile(',.*$')
         self.name = _p.sub(
             '', soup.find(id="ctl00_MainContent_Label1").get_text())[14:]
@@ -143,7 +144,7 @@ class Perdoliq:
                 "There isn't any correct answers for %s. Looks like"\
                 " something went wrong. Trying other way...", q_number
             )
-            # send all checkboxes as answer to 30th page
+            # send all checkboxes as answer to 30th page (4 answers questions)
             requests.post(
                 settings.fesmu_root_url + 'studtst2.aspx',
                 data=settings.merge(
