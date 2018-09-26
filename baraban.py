@@ -6,16 +6,17 @@ on the telegram.ext bot framework.
 This program is dedicated to the public domain under the CC0 license.
 """
 import os
+import sys
 import logging
 import threading
 import telegram
 from telegram.error import NetworkError, Unauthorized
 from time import sleep
 try:
-    import tg_settings
+    TOKEN = os.environ["TG_TOKEN"]
 except:
-    print("You have to create tg_settings.py. See tg_settings.py.example.")
-    os.exit(1)
+    print("You have to set env var TG_TOKEN with bot token.")
+    sys.exit(1)
 try:
     if os.environ["DRYRUN"]:
         from dryrun import Perdoliq
@@ -29,7 +30,6 @@ def main():
     """Run the bot."""
     global update_id
     # Telegram Bot Authorization Token
-    TOKEN = tg_settings.TG_TOKEN
     bot = telegram.Bot(TOKEN)
 
     # get the first pending update_id,
@@ -102,7 +102,10 @@ def do_action(update):
                 "chosen subj %s "\
                 "test %s and accuracy %s" % (s[3], s[4], s[5])
         update.message.reply_text(msg)
-        update.message.reply_photo(open('1516736368795.png', 'rb'))
+        update.message.reply_text("You cannot resolve more than "\
+            "one test in the same time."\
+            "Одновременно решать более одного теста невозможно,"\
+            " вы испортите результаты обоих тестов.")
         perdoliq(s[1], s[2], s[3], s[4], s[5], s[6])
         update.message.reply_text("It's done. Check your test because "\
                 "i disclaim any responsibility.")
