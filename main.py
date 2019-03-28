@@ -135,11 +135,7 @@ class Perdoliq:
             settings.fesmu_root_url + 'studtst3.aspx',
             data=settings.scam_data_5,
             cookies={'ASP.NET_SessionId': self.SessionId})
-        r = requests.get(
-            settings.fesmu_root_url + 'studtst2.aspx',
-            cookies={'ASP.NET_SessionId': self.SessionId},
-            headers={'User-Agent': 'Mozilla/1337'})
-        # get answer page
+        # get page with answers
         r = requests.get(
             settings.fesmu_root_url + 'studtst5.aspx',
             cookies={'ASP.NET_SessionId': self.SessionId},
@@ -162,6 +158,7 @@ class Perdoliq:
                 settings.fesmu_root_url + 'studtst30.aspx',
                 data=settings.scam_data_7,
                 cookies={'ASP.NET_SessionId': self.SessionId})
+            # get page with answers
             r = requests.get(
                 settings.fesmu_root_url + 'studtst5.aspx',
                 cookies={'ASP.NET_SessionId': self.SessionId},
