@@ -112,10 +112,38 @@ def do_action(update):
     elif s[0] == '/list':
         try:
             if len(s) == 3:
-                update.message.reply_text("Fetching tests...")
-                sleep(5)
+                update.message.reply_text("Fetching subjects...")
+                sleep(1)
                 tests = list_test(s[1], s[2])
-                #print("******",tests)
+                msg = "Here is an available subjects:\n```"
+                i = 0
+                for subj in tests:
+                    tests_count = len(tests[subj])
+                    msg = msg + (" [%s] %s (%s tests)\n" % (i, subj, tests_count))
+                    i += 1
+#           j = 0
+#           for test in tests[subj]:
+#               msg = msg + ("     [%s] %s\n" % (j, test))
+#               j += 1
+                update.message.reply_markdown(msg + "```\n Pay attention to "\
+                        "numbers in brackets \[..] *Here is subj or test numbers*")
+            elif len(s) == 4:
+                update.message.reply_text("Fetching tests...")
+                sleep(1)
+                tests = list_test(s[1], s[2])
+                i = int(s[3])
+                msg = "Here is an available tests:\n"
+                j = 0
+                for subj in tests:
+                    if j == i:
+                        msg = msg + ("``` *** %s ***\n----------\n" % subj)
+                        k = 0
+                        for test in tests[subj]:
+                            msg = msg + ("[%s] %s\n" % (k, test))
+                            k += 1
+                    j += 1
+                update.message.reply_markdown(msg + "```\n Pay attention to "\
+                        "numbers in brackets \[..] *Here is subj or test numbers*")
             else:
                 update.message.reply_markdown("Usage: */list <user[text]>"\
                         " <pass[text]>*")
@@ -124,18 +152,6 @@ def do_action(update):
             update.message.reply_markdown("Usage: */list <user[text]>"\
                     " <pass[text]>*")
             return False
-        msg = "Here is an available tests:\n``` "
-        i = 0
-        #print("******",tests)
-        for subj in tests:
-            msg = msg + (" [%s] %s\n" % (i, subj))
-            i += 1
-            j = 0
-            for test in tests[subj]:
-                msg = msg + ("     [%s] %s\n" % (j, test))
-                j += 1
-        update.message.reply_markdown(msg + "```\n Pay attention to "\
-                "numbers in brackets \[..] *Here is subj and test numbers*")
     else:
         update.message.reply_markdown("Possible commands: */resolve, /list*")
         update.message.reply_markdown("Usage: */resolve <user[text]> "\

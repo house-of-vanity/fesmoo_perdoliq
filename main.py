@@ -62,6 +62,7 @@ class Perdoliq:
         # parse tests per subject
         i = 0
         for subject in self.subjects:
+            logging.info('Found subject %s' % subject)
             r = requests.post(
                 settings.fesmu_root_url + 'studtst1.aspx',
                 data=settings.merge(settings.scam_data_2,
@@ -70,6 +71,7 @@ class Perdoliq:
             soup = BeautifulSoup(r.text, "html.parser")
             for test in soup.find_all(class_="dxeListBoxItem_Aqua dxeLTM"):
                 if test.get_text() != '\xa0':
+                    logging.info('\tFound test %s for subject %s' % (test.get_text(), subject))
                     self.subjects[subject].append(test.get_text())
                     logging.debug('%s - Found test %s' % (subject,
                                                           test.get_text()))
@@ -133,6 +135,10 @@ class Perdoliq:
             settings.fesmu_root_url + 'studtst3.aspx',
             data=settings.scam_data_5,
             cookies={'ASP.NET_SessionId': self.SessionId})
+        r = requests.get(
+            settings.fesmu_root_url + 'studtst2.aspx',
+            cookies={'ASP.NET_SessionId': self.SessionId},
+            headers={'User-Agent': 'Mozilla/1337'})
         # get answer page
         r = requests.get(
             settings.fesmu_root_url + 'studtst5.aspx',
