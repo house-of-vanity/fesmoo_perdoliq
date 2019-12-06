@@ -7,5 +7,5 @@ RUN apt-get update && \
       
 WORKDIR /usr/share/fesmoo_perdoliq
 COPY ./*py /usr/share/fesmoo_perdoliq/
-CMD python3 baraban.py
+CMD python3 bot.py
 

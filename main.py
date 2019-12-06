@@ -30,11 +30,10 @@ class Perdoliq:
             settings.fesmu_root_url,
             data=settings.merge(
                 settings.scam_data_1, {
-                    'ctl00$MainContent$TextBox1': self.username,
-                    'ctl00$MainContent$TextBox2': self.password,
+                    'ctl00$MainContent$UserText': self.username,
+                    'ctl00$MainContent$PassText': self.password,
                 }),
             cookies={'ASP.NET_SessionId': self.SessionId})
-
         r = requests.get(
             settings.fesmu_root_url + 'startstu.aspx',
             cookies={'ASP.NET_SessionId': self.SessionId})

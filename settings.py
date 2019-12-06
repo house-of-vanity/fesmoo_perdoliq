@@ -8,30 +8,14 @@ def merge(x, y):
 
 
 scam_data_1 = {
-    'ctl00$MainContent$UserText':
-    '',
-    'ctl00$MainContent$PassText':
-    '',
-    '__EVENTTARGET':
-    '',
-    'ctl00_MainContent_ToolkitScriptManager1_HiddenField':
-    '',
-    '__EVENTARGUMENT':
-    '',
-    '__VIEWSTATE':
-    '/wEPDwUKLTQ4NzYwNDEzOQ9kFgJmD2QWAgIDD2QWAgIBD2QWAgIFDw8WAh4EVGV4dAVA0KHQtdC50YfQsNGBINC/0L7Qu9GM0LfQvtCy0LDRgtC10LvQtdC5INC90LAg0L/QvtGA0YLQsNC70LU6IDE0OWRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYEBR1jdGwwMCRNYWluQ29udGVudCRBU1B4QnV0dG9uMQUdY3RsMDAkTWFpbkNvbnRlbnQkQVNQeEJ1dHRvbjMFHWN0bDAwJE1haW5Db250ZW50JEFTUHhCdXR0b24yBR1jdGwwMCRNYWluQ29udGVudCRBU1B4QnV0dG9uNCwdlTOn/Y3tYt2bGQcxN1Ayzl4rDNlkVU6tnQ6bR4Dx',
-    '__VIEWSTATEGENERATOR':
-    '73D4C735',
-    '__EVENTVALIDATION':
-    '/wEdAAcLL4CnFN6qTtcjF0fQcU/LUN0eEH6RAZcaSKVdt8S4X7osef1mutGT26WuFCdWwFYhaXIQoXEs7lyT4XozQ4OInWK1mn7aEBNhVaP9v76fJNxRJK/kVxlULg0AsW337/IhsIAW9IW5kv7Tf6wiSWjxVWBHkOt1REFfEOsSpvCk8uTD/X8OKiSobFuKW+nh/Sg=',
-    'ctl00$MainContent$ASPxButton2':
-    '',
-    'ctl00$MainContent$TextBox3':
-    '',
-    'ctl00$MainContent$TextBox4':
-    '',
-    'DXScript':
-    '1_42,1_75,2_27'
+    'ctl00_MainContent_ToolkitScriptManager1_HiddenField': '',
+    '__EVENTTARGET': '',
+    '__EVENTARGUMENT': '',
+    '__VIEWSTATE': '/wEPDwUKLTM5Mjc2OTQzMQ9kFgJmD2QWAgIDD2QWAgIBD2QWAgIFDw8WAh4EVGV4dAVA0KHQtdC50YfQsNGBINC/0L7Qu9GM0LfQvtCy0LDRgtC10LvQtdC5INC90LAg0L/QvtGA0YLQsNC70LU6IDE0OWRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBR1jdGwwMCRNYWluQ29udGVudCRBU1B4QnV0dG9uMaxc3rVccSyMpTHRwTntZdTJoxFSZnqwhbBnF1ATfZNL',
+    '__VIEWSTATEGENERATOR': '73D4C735',
+    '__EVENTVALIDATION': '/wEdAAPdQMZpQT+E4nHOdGeZqyTVUN0eEH6RAZcaSKVdt8S4X7osef1mutGT26WuFCdWwFbKoA75NEe+fYiUfCl9R3M++NkzZ8G6NwAHQz7bnnn1nw==',
+    'ctl00$MainContent$ASPxButton1': '',
+    'DXScript': '1_42,1_75,2_27',
 }
 
 scam_data_2 = {

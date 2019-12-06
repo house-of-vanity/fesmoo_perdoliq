@@ -6,16 +6,17 @@ on the telegram.ext bot framework.
 This program is dedicated to the public domain under the CC0 license.
 """
 import os
+import sys
 import logging
 import threading
 import telegram
 from telegram.error import NetworkError, Unauthorized
 from time import sleep
 try:
-    import tg_settings
+    TOKEN = os.environ["TG_TOKEN"]
 except:
-    print("You have to create tg_settings.py. See tg_settings.py.example.")
-    os.exit(1)
+    print("You have to set env var TG_TOKEN with bot token.")
+    sys.exit(1)
 try:
     if os.environ["DRYRUN"]:
         from dryrun import Perdoliq
@@ -29,7 +30,6 @@ def main():
     """Run the bot."""
     global update_id
     # Telegram Bot Authorization Token
-    TOKEN = tg_settings.TG_TOKEN
     bot = telegram.Bot(TOKEN)
 
     # get the first pending update_id,
@@ -86,9 +86,83 @@ def do_action(update):
         s = update.message.text.split()
     except:
         return 1
-#    if s[0] == '/resolve':
-#        return 0
-    
-if __name__ == '__main__':
-    main()
+    if s[0] == '/resolve':
+        if len(s) != 7:
+            update.message.reply_markdown("Missing operand... Try again")
+            update.message.reply_markdown("Usage: */resolve <user[text]> "\
+                "<pass[text]> <subj[int]> <test[int]> "\
+                "<accuracy[0-100]> <commit[1/0]>*")
+            return False
 
+        msg = "Please wait. If you have chosen commit=1, so test "\
+                "going to be resolved in about 20 minutes and will "\
+                "be commited automatically, otherwise it will take "\
+                "about a 2 minutes and you have to "\
+                "commit it by yourself.  Just wait. PS you have "\
+                "chosen subj %s "\
+                "test %s and accuracy %s" % (s[3], s[4], s[5])
+        update.message.reply_text(msg)
+        update.message.reply_text("You cannot resolve more than "\
+            "one test in the same time."\
+            "Одновременно решать более одного теста невозможно,"\
+            " вы испортите результаты обоих тестов.")
+        perdoliq(s[1], s[2], s[3], s[4], s[5], s[6])
+        update.message.reply_text("It's done. Check your test because "\
+                "i disclaim any responsibility.")
+    elif s[0] == '/list':
+        try:
+            if len(s) == 3:
+                update.message.reply_text("Fetching subjects...")
+                sleep(1)
+                tests = list_test(s[1], s[2])
+                msg = "Here is an available subjects:\n```"
+                i = 0
+                for subj in tests:
+                    tests_count = len(tests[subj])
+                    msg = msg + (" [%s] %s (%s tests)\n" % (i, subj, tests_count))
+                    i += 1
+#           j = 0
+#           for test in tests[subj]:
+#               msg = msg + ("     [%s] %s\n" % (j, test))
+#               j += 1
+                update.message.reply_markdown(msg + "```\n Pay attention to "\
+                        "numbers in brackets \[..] *Here is subj or test numbers*")
+            elif len(s) == 4:
+                update.message.reply_text("Fetching tests...")
+                sleep(1)
+                tests = list_test(s[1], s[2])
+                i = int(s[3])
+                msg = "Here is an available tests:\n"
+                j = 0
+                for subj in tests:
+                    if j == i:
+                        msg = msg + ("``` *** %s ***\n----------\n" % subj)
+                        k = 0
+                        for test in tests[subj]:
+                            msg = msg + ("[%s] %s\n" % (k, test))
+                            k += 1
+                    j += 1
+                update.message.reply_markdown(msg + "```\n Pay attention to "\
+                        "numbers in brackets \[..] *Here is subj or test numbers*")
+            else:
+                update.message.reply_markdown("Usage: */list <user[text]>"\
+                        " <pass[text]>*")
+                return False
+        except:
+            update.message.reply_markdown("Usage: */list <user[text]>"\
+                    " <pass[text]>*")
+            return False
+    else:
+        update.message.reply_markdown("Possible commands: */resolve, /list*")
+        update.message.reply_markdown("Usage: */resolve <user[text]> "\
+                "<pass[text]> <subj[int]> <test[int]> "\
+                "<accuracy[0-100]> <commit[1/0]>*")
+        update.message.reply_markdown("Usage: */list <user[text]> "\
+                "<pass[text]>*")
+
+
+if __name__ == '__main__':
+    try:
+      main()
+    except:
+      pass
