@@ -236,6 +236,7 @@ def button_handler(update, context):
                 precision,
                 submit,
                 delay)
+        query.edit_message_text("Так! Я все решил.")
 
 if __name__ == '__main__':
     try:
