@@ -1,5 +1,6 @@
 # configs
 creds.ini
+baraban.build/
 tg_settings.py
 *.swp
 *.swo
