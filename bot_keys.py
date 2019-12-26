@@ -182,10 +182,12 @@ def button_handler(update, context):
     if query.data.split('_')[0] == 't': # test
         data = query.data
         keyboard = [[], []]
-        for p in range(0, 51, 5):
-            keyboard[0].append(InlineKeyboardButton(f"{p}", callback_data=f"p_{p}_{data}"))
-        for p in range(50, 101, 5):
-            keyboard[1].append(InlineKeyboardButton(f"{p}", callback_data=f"p_{p}_{data}"))
+        in_a_row = 4
+        for p in range(0, 101, 5):
+            if len(keyboard[-1]) == in_a_row:
+                keyboard.append(list())
+            keyboard[-1].append(InlineKeyboardButton(f"{p}", callback_data=f"p_{p}_{data}"))
+
         keyboard.append([InlineKeyboardButton("Закрыть", callback_data=f"close")])
         reply_markup = InlineKeyboardMarkup(keyboard)
         query.edit_message_text("Ok, а какая точность?", reply_markup=reply_markup)
