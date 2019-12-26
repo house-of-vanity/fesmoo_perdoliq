@@ -224,8 +224,10 @@ class Perdoliq:
             data=settings.scam_data_10,
             cookies={'ASP.NET_SessionId': self.SessionId})
 
-    def resolve(self, subj, test, accuracy, is_delayed=False):
+    def resolve(self, subj, test, accuracy=100, submit=False, is_delayed=False):
         # renew auth
+        logging.info(
+                f"Resolving subj {subj}, test {test}, acc {accuracy}, submit {submit}, delay {is_delayed}")
         self.auth()
         # get count of questions
         q_count = self.start_test(subj, test)
@@ -256,5 +258,5 @@ class Perdoliq:
                 self.answer(i, prediction)
 
         # make autocommit
-        if is_delayed == True:
+        if submit == True:
             self.finish_test()
