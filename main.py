@@ -16,29 +16,45 @@ class Perdoliq:
         self.SessionId = ''
         self.name = ''
         self.subjects = {}
+    
+    @staticmethod
+    def get_secrets(response, input_id):
+        soup = BeautifulSoup(response.text, "html.parser")
+        try:
+            secret = soup.find(id=input_id).get('value', '')
+        except AttributeError:
+            secret = ''
+        logging.debug(f'*** Found {input_id}: {secret}')
+        return secret
 
     # make auth
     def auth(self):
         r = requests.get(settings.fesmu_root_url)
-        for c in r.cookies:
-            if c.name == 'ASP.NET_SessionId':
-                self.SessionId = c.value
-                logging.info('ASP.NET_SessionId for curtain session is %s',
-                             c.value)
+        self.SessionId = r.cookies.get('ASP.NET_SessionId', None)
+        logging.info('ASP.NET_SessionId for curtain session is %s',
+                     self.SessionId)
 
+        data={
+                'ctl00$MainContent$UserText': self.username,
+                'ctl00$MainContent$PassText': self.password,
+                'ctl00_MainContent_ToolkitScriptManager1_HiddenField': '',
+                'ctl00$MainContent$ASPxButton1': '',
+                '__EVENTTARGET': '',
+                '__EVENTARGUMENT': '',
+                '__VIEWSTATE': self.get_secrets(r, '__VIEWSTATE'),
+                '__VIEWSTATEGENERATOR': self.get_secrets(r, '__VIEWSTATEGENERATOR'),
+                '__EVENTVALIDATION': self.get_secrets(r, '__EVENTVALIDATION'),
+                #'DXScript': get_secrets(r, 'DXScript'),
+            }
         r = requests.post(
             settings.fesmu_root_url,
-            data=settings.merge(
-                settings.scam_data_1, {
-                    'ctl00$MainContent$UserText': self.username,
-                    'ctl00$MainContent$PassText': self.password,
-                }),
+            data = data,
+            headers=settings.headers,
             cookies={'ASP.NET_SessionId': self.SessionId})
         r = requests.get(
             settings.fesmu_root_url + 'startstu.aspx',
             cookies={'ASP.NET_SessionId': self.SessionId})
         soup = BeautifulSoup(r.text, "html.parser")
-        #print("****** ", soup)
         _p = re.compile(',.*$')
         self.name = _p.sub(
             '', soup.find(id="ctl00_MainContent_Label1").get_text())[14:]

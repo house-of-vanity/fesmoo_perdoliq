@@ -6,16 +6,32 @@ def merge(x, y):
     z.update(y)  # modifies z with y's keys and values & returns None
     return z
 
+headers = {
+    "Host": "www.fesmu.ru",
+    "Connection": "keep-alive",
+    "Content-Length": '896',
+    "Cache-Control": "max-age=0",
+    "Origin": "http://www.fesmu.ru",
+    "Upgrade-Insecure-Requests": '1',
+    "DNT": '1',
+    "Content-Type": "application/x-www-form-urlencoded",
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.87 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Referer": "http://www.fesmu.ru/eport/eport/",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept-Language": "en-US,en;q=0.9,ru;q=0.8,zh-CN;q=0.7,zh;q=0.6",
+}
+
 
 scam_data_1 = {
     'ctl00_MainContent_ToolkitScriptManager1_HiddenField': '',
-    '__EVENTTARGET': '',
-    '__EVENTARGUMENT': '',
-    '__VIEWSTATE': '/wEPDwUKLTM5Mjc2OTQzMQ9kFgJmD2QWAgIDD2QWAgIBD2QWAgIFDw8WAh4EVGV4dAVA0KHQtdC50YfQsNGBINC/0L7Qu9GM0LfQvtCy0LDRgtC10LvQtdC5INC90LAg0L/QvtGA0YLQsNC70LU6IDE0OWRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYBBR1jdGwwMCRNYWluQ29udGVudCRBU1B4QnV0dG9uMaxc3rVccSyMpTHRwTntZdTJoxFSZnqwhbBnF1ATfZNL',
-    '__VIEWSTATEGENERATOR': '73D4C735',
-    '__EVENTVALIDATION': '/wEdAAPdQMZpQT+E4nHOdGeZqyTVUN0eEH6RAZcaSKVdt8S4X7osef1mutGT26WuFCdWwFbKoA75NEe+fYiUfCl9R3M++NkzZ8G6NwAHQz7bnnn1nw==',
+#   '__EVENTTARGET': '',
+#   '__EVENTARGUMENT': '',
+    '__VIEWSTATE': '/wEPDwUKLTM5Mjc2OTQzMQ9kFgJmD2QWAgIDD2QWAgIBD2QWAgIFDw8WAh4EVGV4dAW7AdCX0LAg0YHRg9GC0LrQuCDRg9C90LjQutCw0LvRjNC90YvRhSDQsNCy0YLQvtGA0LjQt9C40YDQvtCy0LDQvdC90YvRhSDQv9C+0LvRjNC30L7QstCw0YLQtdC70LXQuSDQvdCwINC/0L7RgNGC0LDQu9C1OiAyNjY3PGJyLyA+0KHQtdC50YfQsNGBINC/0L7QtNC60LvRjtGH0LXQvdC40Lkg0Log0L/QvtGA0YLQsNC70YM6IDUzOTVkZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAQUdY3RsMDAkTWFpbkNvbnRlbnQkQVNQeEJ1dHRvbjFA+y5c2mr9OLuyebEMey8lwZdb51brZaJ6iXIvwaVWpg==',
+#   '__VIEWSTATEGENERATOR': '73D4C735',
+    '__EVENTVALIDATION': '/wEdAAMqLyJo1lw62U+c0YXYJTJCUN0eEH6RAZcaSKVdt8S4X7osef1mutGT26WuFCdWwFaDQnYjJQ2/uhzVMKV3HbBN40+h9rsbvZwG3sNsqevEUg==',
     'ctl00$MainContent$ASPxButton1': '',
-    'DXScript': '1_42,1_75,2_27',
+#   'DXScript': '1_42,1_75,2_27',
 }
 
 scam_data_2 = {
