@@ -14,6 +14,12 @@ from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
 from telegram.error import NetworkError, Unauthorized
 from time import sleep
 from functools import wraps
+import datetime
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+now = datetime.datetime.now()
 
 from pprint import pprint
 try:
@@ -116,13 +122,19 @@ def perdoliq(username, password, subj, test, acc, submit=True, is_delayed=False)
         return "Exception: " + str(e)
 
 def list_test(username, password):
-    if username in cached_tests:
-        return cached_tests[username]
+    now = datetime.datetime.now()
+    cache_name = f"{now.month}_{now.day}_{now.hour}"
+    if cache_name in cached_tests:
+        cache_username = cached_tests[cache_name].get(username, None)
+        if cache_username:
+            return cache_username
     try:
         app = Perdoliq(username, password)
         app.auth()
         tests = app.get_tests()
-        cached_tests[username] = tests
+        if not cached_tests.get(cache_name, None):
+            cached_tests[cache_name] = dict()
+        cached_tests[cache_name][username] = tests
         return tests
     except Exception as e:
         return "Exception: " + str(e)
@@ -132,7 +144,6 @@ def list_(update, context):
     query = update.callback_query
     user_id = update.effective_user.id
     tests = list_test(auth[user_id]["login"], auth[user_id]["passwd"])
-    print(tests)
     keyboard = list()
     i = 1
     for subj in tests:
@@ -140,7 +151,7 @@ def list_(update, context):
         #msg = msg + (" [%s] %s (%s tests)\n" % (i, subj, tests_count))
         keyboard.append([InlineKeyboardButton(f"{i}. {subj}", callback_data=f"s_{i}")])
         i += 1
-    keyboard.append([InlineKeyboardButton("Close", callback_data="subj")])
+    keyboard.append([InlineKeyboardButton("Закрыть", callback_data=f"close")])
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('Чо будем хакать?', reply_markup=reply_markup)
 
